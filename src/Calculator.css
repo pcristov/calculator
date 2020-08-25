@@ -2,8 +2,10 @@
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	grid-gap: 10px;
-	grid-auto-rows: minmax(100px, auto);
+	grid-auto-rows: minmax(50px, auto);
 	align-items: center;
+	width: 250px;
+    margin: 25px auto 0;
 }
 
 .display {
