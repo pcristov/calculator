@@ -8,7 +8,8 @@ export default class Calculator extends Component {
 	    
 	    this.state = {
 		    stack: "",
-		    result: ""
+		    result: "",
+		    decimal: 0
 	    }
 	    
 	    this.addToStack = this.addToStack.bind(this);
@@ -17,13 +18,37 @@ export default class Calculator extends Component {
 	}
 	
 	addToStack(e) {
-		const cc = this.state.stack;
+		const stack = this.state.stack;
+		const operations = ['+', '-', '/', '*'];
 		let input = e.target.innerHTML;
+
+		if(input === 'x') { input = '*' }
 		
-		if(input == 'x') { input = '*' }
+		if(input === '.') {
+			if(this.state.decimal)	{
+				input = ''
+			}
+			else {
+				this.setState({
+					decimal: 1
+		    	});
+		 	}
+		}
+		
+		if(operations.includes(input) && this.state.decimal) {
+			this.setState({
+				decimal: 0
+		    });
+		}
+		
+		if(stack.slice(-1) === '0' && input === '0') {
+			if(!this.state.decimal)	{
+				input = ''
+			}
+		}
 		
 		this.setState({
-			stack: cc.concat(input)
+			stack: stack.concat(input)
 	    });
 	}
 	
@@ -53,15 +78,15 @@ export default class Calculator extends Component {
 	render() {
 		return (
 			<div className="wrapper" id="wrapper">
-				<div className="display" id="display">{ this.state.stack } | { this.state.result }</div>
+				<div className="display" id="display">{ this.state.stack } | { this.state.result } | is decimal: { this.state.decimal }</div>
 				
 				<div className="clear" id="clear" onClick={ this.clear }>AC</div>
 				<div className="divide" id="divide" onClick={ this.addToStack }>/</div>
 				<div className="multiply" id="multiply" onClick={ this.addToStack }>x</div>
 				
 				<div className="seven" id="seven" onClick={ this.addToStack }>7</div>
-				<div className="eight" id="eight" onClick={ this.addToStack }>6</div>
-				<div className="nine" id="nine" onClick={ this.addToStack }>5</div>
+				<div className="eight" id="eight" onClick={ this.addToStack }>8</div>
+				<div className="nine" id="nine" onClick={ this.addToStack }>9</div>
 				<div className="subtract" id="subtract" onClick={ this.addToStack }>-</div>
 				
 				<div className="four" id="four" onClick={ this.addToStack }>4</div>
