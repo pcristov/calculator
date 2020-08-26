@@ -4,18 +4,42 @@
 	grid-gap: 10px;
 	grid-auto-rows: minmax(50px, auto);
 	align-items: center;
-	width: 250px;
-    margin: 25px auto 0;
+	width: 280px;
+    margin: 50px auto 0;
+    padding: 10px;
+    border: 1px solid #10fdd1;
+    border-radius: 10px;
+}
+
+.wrapper > * {
+    padding: 16px 25px;
+    border: 1px solid #f1f0f0;
+    border-radius: 5px;
 }
 
 .display {
 	grid-column: 1 / 5;
 	grid-row: 1;
+	text-align: right;
+	background-color: #fdf9f9;
+    padding: 7px 8px 5px;
+}
+
+#result {
+	font-size: 20px;
 }
 
 .clear {
 	grid-column: 1 / 3;
 	grid-row: 2;
+	background-color: #fd6d6d;
+    padding: 16px;
+    color: #fff;
+}
+
+.divide, .multiply, .subtract, .add {
+	background-color: #c9fff5;
+    padding: 16px 25px;
 }
 
 .divide {
@@ -31,6 +55,7 @@
 .seven {
 	grid-column: 1/2;
 	grid-row: 3;
+    padding: 16px 25px;
 }
 
 .eight {
@@ -86,6 +111,8 @@
 .equals {
 	grid-column: 4/5;
 	grid-row: 5/7;
+	background-color: #10fdd1;
+    padding: 46px 0;
 }
 
 .zero {
