@@ -8,7 +8,7 @@ export default class Calculator extends Component {
 	    
 	    this.state = {
 		    stack: "",
-		    result: "",
+		    result: "0",
 		    decimal: 0
 	    }
 	    
@@ -20,6 +20,7 @@ export default class Calculator extends Component {
 	addToStack(e) {
 		const stack = this.state.stack;
 		const operations = ['+', '-', '/', '*'];
+		const operationsExceptSubtraction = ['+', '/', '*'];
 		let input = e.target.innerHTML;
 
 		if(input === 'x') { input = '*' }
@@ -41,15 +42,35 @@ export default class Calculator extends Component {
 		    });
 		}
 		
-		if(stack.slice(-1) === '0' && input === '0') {
+		if(stack[stack.length - 1] === '0' && input === '0') {
 			if(!this.state.decimal)	{
 				input = ''
 			}
 		}
 		
-		this.setState({
-			stack: stack.concat(input)
-	    });
+		if(operationsExceptSubtraction.includes(input) && stack.length === 0) {
+			input = ""
+		}
+		
+		if(operations.includes(stack[stack.length - 1]) && operations.includes(input)) {
+			if(input !== '-' && operationsExceptSubtraction.includes(stack[stack.length - 1])) {
+				this.setState({
+					stack: stack.slice(0, -1) + input
+			    });
+		    }
+		    else {
+			    if(stack[stack.length - 1] !== '-') {
+					this.setState({
+						stack: stack.concat(input)
+				    });
+			    }
+		    }
+		}
+		else {
+			this.setState({
+				stack: stack.concat(input)
+		    });
+	    }
 	}
 	
 	equals() {
@@ -57,13 +78,13 @@ export default class Calculator extends Component {
 		
 		this.setState({
 			result: eval(stack)
-	    });
+	    }, () => this.setState({ stack: this.state.result.toString() }));
 	}
 	
 	clear() {
 		this.setState({
 		    stack: "",
-		    result: ""
+		    result: "0"
 	    });
 	}
 	
@@ -78,7 +99,13 @@ export default class Calculator extends Component {
 	render() {
 		return (
 			<div className="wrapper" id="wrapper">
-				<div className="display" id="display">{ this.state.stack } | { this.state.result } | is decimal: { this.state.decimal }</div>
+				<div className="display" id="display">
+					{ this.state.stack }
+					<br />
+					<span id="result">
+						{ this.state.result }
+					</span>
+				</div>
 				
 				<div className="clear" id="clear" onClick={ this.clear }>AC</div>
 				<div className="divide" id="divide" onClick={ this.addToStack }>/</div>
