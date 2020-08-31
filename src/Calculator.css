@@ -13,6 +13,7 @@
 
 .wrapper > :not(.display):not(.formula):not(.equals) {
     padding: 16px 25px;
+    cursor: pointer;
 }
 
 .wrapper > :not(.formula) {
